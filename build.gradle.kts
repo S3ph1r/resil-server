@@ -1,3 +1,6 @@
+val ktor_version: String by project
+val kotlin_version: String by project
+val logback_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -9,7 +12,7 @@ group = "com.example"
 version = "0.0.1"
 
 application {
-    mainClass = "io.ktor.server.netty.EngineMain"
+    mainClass.set("ApplicationKt")
 }
 
 repositories {
@@ -17,13 +20,11 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.ktor.server.call.logging)
-    implementation(libs.ktor.server.content.negotiation)
-    implementation(libs.ktor.server.core)
-    implementation(libs.ktor.serialization.gson)
-    implementation(libs.ktor.server.netty)
-    implementation(libs.logback.classic)
-    implementation(libs.ktor.server.config.yaml)
-    testImplementation(libs.ktor.server.test.host)
-    testImplementation(libs.kotlin.test.junit)
+    // Blocco le versioni di Ktor a 2.3.9
+    implementation("io.ktor:ktor-server-core-jvm:2.3.9")
+    implementation("io.ktor:ktor-server-netty-jvm:2.3.9")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:2.3.9")
+    implementation("io.ktor:ktor-serialization-gson-jvm:2.3.9")
+    implementation("io.ktor:ktor-server-call-logging-jvm:2.3.9")
+    implementation("ch.qos.logback:logback-classic:1.4.14")
 }
