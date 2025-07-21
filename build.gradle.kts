@@ -1,7 +1,8 @@
 
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ktor)
+    kotlin("jvm") version "1.9.22"
+    id("io.ktor.plugin") version "2.3.9"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.example"
