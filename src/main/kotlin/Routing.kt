@@ -1,18 +1,36 @@
-package com.example
-
-import io.ktor.serialization.gson.*
+import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.calllogging.*
-import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.slf4j.event.*
+
+// Per ora, useremo una semplice mappa in memoria per "salvare" gli utenti.
+val userStorage = mutableMapOf<String, RegistrationRequest>()
 
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondText("Resil Server is alive!")
+        }
+
+        route("/auth") {
+            post("/register") {
+                try {
+                    val request = call.receive<RegistrationRequest>()
+
+                    println("Received registration for: ${request.phoneNumber}")
+                    println("Identity Key starts with: ${request.identityPublicKey.take(10)}...")
+                    println("User has ${request.preKeys.size} one-time pre-keys.")
+
+                    userStorage[request.phoneNumber] = request
+
+                    call.respond(HttpStatusCode.OK, "User registered successfully.")
+
+                } catch (e: Exception) {
+                    println("Error during registration: ${e.message}")
+                    call.respond(HttpStatusCode.BadRequest, "Invalid request format.")
+                }
+            }
         }
     }
 }
