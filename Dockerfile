@@ -21,10 +21,10 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copia solo il file JAR creato nella fase di build.
-COPY --from=build /home/gradle/project/build/libs/resil-server-0.0.1-all.jar .
+COPY --from=build /home/gradle/project/build/libs/*-all.jar resil-server.jar
 
 # Esponi la porta 8080 (la porta di default di Ktor). Render userà questa informazione.
 EXPOSE 8080
 
 # Comando per avviare il server quando il container parte.
-CMD ["java", "-jar", "resil-server-0.0.1-all.jar"]
+CMD ["java", "-jar", "resil-server.jar"]
