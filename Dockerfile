@@ -12,7 +12,7 @@ RUN chmod +x ./gradlew
 
 # Esegui il comando di build per creare il file JAR.
 # L'opzione --no-daemon è consigliata per gli ambienti CI/CD come Render.
-RUN ./gradlew build --no-daemon
+RUN ./gradlew shadowJar --no-daemon
 
 # Fase 2: Run - Usiamo un'immagine Docker più leggera che contiene solo Java per eseguire l'app.
 FROM openjdk:17-slim
